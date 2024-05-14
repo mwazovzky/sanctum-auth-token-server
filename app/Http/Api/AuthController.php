@@ -23,7 +23,10 @@ class AuthController extends Controller
 
         /** @var User $user */
         $user = User::firstWhere('email', $attributes['email']);
-        $token = $user->createToken('API token for ' . $user->email)->plainTextToken;
+        $token = $user->createToken(
+            name: 'API token for ' . $user->email,
+            expiresAt: now()->addDays(7),
+        )->plainTextToken;
 
         return response()->json([
             'message' => 'Authenticated.',
